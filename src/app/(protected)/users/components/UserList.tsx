@@ -1,41 +1,58 @@
+import CustomPagination from "@/app/components/pagination";
+import { IPaginationMeta } from "@/app/utils/server_fetch/fetch_helper";
 import { IUser } from "@/core/interface/login-response.interface";
+import DeleteUser from "./actions/DeleteUser";
+import EditUser from "./actions/EditUser";
 
 export default function UserList({
   currentUsers,
-  currentPage,
-  totalPages,
+  paginationmeta,
 }: {
   currentUsers: IUser[];
-  currentPage: number;
-  totalPages: number;
+  paginationmeta: IPaginationMeta;
 }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">User List</h2>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border">
           <thead>
             <tr className="bg-gray-200 text-gray-700">
-              <th className="px-4 py-2 border">ID</th>
-              <th className="px-4 py-2 border">Name</th>
+              <th className="px-4 py-2 border">SN</th>
+              <th className="px-4 py-2 border">First Name</th>
+              <th className="px-4 py-2 border">Last Name</th>
               <th className="px-4 py-2 border">Email</th>
+              <th className="px-4 py-2 border">Role</th>
+              <th className="px-4 py-2 border">Phone</th>
+              <th className="px-4 py-2 border">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((user) => (
+            {currentUsers.map((user, index) => (
               <tr
                 key={user.id}
                 className="text-gray-700 hover:bg-gray-100 transition"
               >
-                <td className="px-4 py-2 border text-center">{user.id}</td>
+                <td className="px-4 py-2 border text-center">{index + 1}</td>
                 <td className="px-4 py-2 border">{user.first_name}</td>
+                <td className="px-4 py-2 border">{user.last_name}</td>
                 <td className="px-4 py-2 border">{user.email}</td>
+                <td className="px-4 py-2 border">{user.role}</td>
+                <td className="px-4 py-2 border">{user.phone}</td>
+                <td className="px-4 py-2 border flex space-x-2">
+                  <EditUser user={user} />
+                  <DeleteUser user={user} />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="flex justify-end items-center mt-4">
+        {paginationmeta.total_pages > 1 && (
+          <CustomPagination paginationmeta={paginationmeta} route="/users" />
+        )}
       </div>
     </div>
   );

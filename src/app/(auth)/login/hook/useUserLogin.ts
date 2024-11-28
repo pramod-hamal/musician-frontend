@@ -38,7 +38,7 @@ export default function useUserLogin(): UseUserLogin {
     });
 
     const jsonData = await response.json();
-    if (jsonData.status >= 400) {
+    if (jsonData.statusCode >= 400) {
      throw jsonData;
     }
 

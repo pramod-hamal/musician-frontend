@@ -82,4 +82,5 @@ export interface SelectInterface {
   disabled?: boolean;
   noOptionsMessage?: string
   search?: boolean
+  name?: string
 }

@@ -16,13 +16,13 @@ export async function fetchData<T>(url: string): Promise<T> {
 }
 
 export interface IPaginationMeta {
-  limit: 10;
-  total: 1;
-  page_total: 1;
-  total_pages: 1;
-  next: null;
-  page: 1;
-  previous: null;
+  limit: number;
+  total: number;
+  page_total: number;
+  total_pages: number;
+  next: number | null;
+  page: number;
+  previous: number | null;
 }
 
 export interface IPaginationData<T> {

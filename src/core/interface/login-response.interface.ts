@@ -1,3 +1,4 @@
+
 export interface ILoginUserRes {
   token: string;
     user: IUser;
@@ -5,7 +6,7 @@ export interface ILoginUserRes {
 
 
 export interface IUser {
-    id: number,
+    id?: number,
     first_name: string,
     last_name: string,
     email: string,
@@ -13,5 +14,7 @@ export interface IUser {
     dob?: string | null,
     gender?: string | null,
     address?: string | null,
-    created_at: string,
+    created_at?: string,
+    role?: string,
+    password?: string,
 }

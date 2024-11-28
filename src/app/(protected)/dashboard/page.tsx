@@ -12,8 +12,6 @@ export default async function Dashboard() {
   const data: IUserCountData = await fetchData<IUserCountData>(
     ApiConstants.users.count
   );
-
-  console.log("data ", data);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
