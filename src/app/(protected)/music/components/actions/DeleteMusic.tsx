@@ -1,20 +1,19 @@
 "use client";
 import { ApiConstants } from "@/app/utils/api.constants";
 import { showToast } from "@/app/utils/toast";
-import { IUser } from "@/core/interface/login-response.interface";
+import { IMusic } from "@/core/interface/music.interface";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-// import { useRouter } from "next-nprogress-bar";
 import { useState } from "react";
 
-export default function DeleteUser({ user }: { user: IUser }) {
+export default function DeleteMusic({ music }: { music: IMusic }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleDelete = async (id: number | undefined) => {
     setLoading(true);
     const token = getCookie("token");
     try {
-      const response = await fetch(ApiConstants.users.delete(id ?? ""), {
+      const response = await fetch(ApiConstants.musics.delete(id ?? ""), {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -25,10 +24,10 @@ export default function DeleteUser({ user }: { user: IUser }) {
       if (jsonData.statusCode >= 400) {
         throw jsonData;
       }
-      showToast({ title: "User deleted successfully", type: "success" });
-      router.push("/users");
-    } catch (err) {
-      showToast({ title: "Error occurred", type: "error" });
+      showToast({ title: "Music deleted successfully", type: "success" });
+      router.push("/music");
+    } catch (err: any) {
+      showToast({ title: err.message ?? "Error occured", type: "error" });
       console.log(err);
     } finally {
       setLoading(false);
@@ -36,7 +35,7 @@ export default function DeleteUser({ user }: { user: IUser }) {
   };
   return (
     <button
-      onClick={() => handleDelete(user.id)}
+      onClick={() => handleDelete(parseInt(music?.id?.toString() ?? ""))}
       className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
     >
       {loading ? "Deleting..." : "Delete"}

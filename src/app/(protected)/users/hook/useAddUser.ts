@@ -30,11 +30,13 @@ const validationSchema = Yup.object({
   address: Yup.string().required("Address is required"),
   role: Yup.string().required("Role is required"),
   password: Yup.string()
-  .min(
-    6,
-    'password must contain 6 or more characters with at least one of each: uppercase, lowercase, number and special'
-  )
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/, { message: "Please create a stronger password" })
+    .min(
+      6,
+      "password must contain 6 or more characters with at least one of each: uppercase, lowercase, number and special"
+    )
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/, {
+      message: "Please create a stronger password",
+    })
     .required("Required"),
 });
 
@@ -64,7 +66,7 @@ export default function useAddUser(closeModal: () => void): UseAddUser {
     }
 
     showToast({ title: "User added successfully", type: "success" });
-    route.push("/users");
+    route.push("/users?page=1");
   };
 
   const formik = useFormik<IUser>({

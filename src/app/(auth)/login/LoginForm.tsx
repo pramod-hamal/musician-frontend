@@ -4,6 +4,7 @@ import { Button } from "@/app/components/button";
 import FormInput from "@/app/components/form/input";
 import PasswordInput from "@/app/components/form/input/password.input";
 import useUserLogin from "./hook/useUserLogin";
+import Link from "next/link";
 
 const LoginForm = () => {
   const { formik, isLoggingIn } = useUserLogin();
@@ -43,9 +44,15 @@ const LoginForm = () => {
             className={`w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300`}
             disabled={formik.isSubmitting}
             loading={formik.isSubmitting}
-            title={isLoggingIn ? "Loggingin..." : "Login"}
+            title={formik.isSubmitting ? "Loggingin..." : "Login"}
             type="submit"
           />
+        </div>
+
+        <div className="mt-5">
+          <p className="text-sm text-gray-800">
+            Don't have an account? <Link href="/register">Register</Link>
+          </p>
         </div>
       </form>
     </div>

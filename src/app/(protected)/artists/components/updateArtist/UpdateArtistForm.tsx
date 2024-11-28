@@ -1,30 +1,26 @@
 "use client";
 
 import FormInput from "@/app/components/form/input";
+import PasswordInput from "@/app/components/form/input/password.input";
 import SelectField from "@/app/components/form/select";
 import { Dropdown } from "@/core/interface/dropdown.base";
-import PasswordInput from "@/app/components/form/input/password.input";
 import { IUser } from "@/core/interface/login-response.interface";
-import useEditUser from "../../hook/useUpdateUser";
+import useEditArtist from "../../hook/useUpdateArtist";
 
 interface EditUserModalProps {
   closeModal: () => void;
   initialValues: IUser;
 }
 
-export default function EditUserForm({
+export default function EditArtistForm({
   closeModal,
   initialValues,
 }: EditUserModalProps) {
-  const { formik, isLoading } = useEditUser(
+  const { formik, isLoading } = useEditArtist(
     { ...initialValues, dob: new Date(initialValues.dob ?? "") },
     closeModal
   );
-  const roleOptions: Dropdown<string>[] = [
-    { value: "artist", label: "Artist" },
-    { value: "artist_manager", label: "Artist Manager" },
-    { value: "super_admin", label: "Super Admin" },
-  ];
+
   const genderOptions: Dropdown<string>[] = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -34,7 +30,7 @@ export default function EditUserForm({
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-96 p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Edit User</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">Edit Artist</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <FormInput
@@ -141,18 +137,7 @@ export default function EditUserForm({
               errors={formik.errors.address}
             />
           </div>
-          <div className="mb-4">
-            <SelectField
-              label="Role"
-              value={formik.values.role}
-              placeholder="Select Role"
-              options={roleOptions}
-              disabled={false}
-              onChange={(e: string) => {
-                formik.setFieldValue("role", e);
-              }}
-            />
-          </div>
+
           <div className="mb-4">
             <SelectField
               label="Gender"

@@ -1,9 +1,9 @@
 "use client";
 import { IUser } from "@/core/interface/login-response.interface";
 import { useState } from "react";
-import EditUserForm from "../updateUser/UpdateUserForm";
+import EditArtistForm from "../updateArtist/UpdateArtistForm";
 
-export default function EditUser({ user }: { user: IUser }) {
+export default function EditArtist({ user }: { user: IUser }) {
     user.password = "";
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,7 +22,7 @@ export default function EditUser({ user }: { user: IUser }) {
       </button>
 
       {isModalOpen && (
-        <EditUserForm closeModal={closeModal} initialValues={user} />
+        <EditArtistForm closeModal={closeModal} initialValues={user} />
       )}
     </>
   );

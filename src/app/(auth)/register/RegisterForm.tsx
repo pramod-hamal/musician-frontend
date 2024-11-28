@@ -1,46 +1,30 @@
 "use client";
 
+import { Button } from "@/app/components/button";
 import FormInput from "@/app/components/form/input";
+import PasswordInput from "@/app/components/form/input/password.input";
 import SelectField from "@/app/components/form/select";
 import { Dropdown } from "@/core/interface/dropdown.base";
-import PasswordInput from "@/app/components/form/input/password.input";
-import { IUser } from "@/core/interface/login-response.interface";
-import useEditUser from "../../hook/useUpdateUser";
+import Link from "next/link";
+import useUserRegistration from "./hook/useUserRegistration";
 
-interface EditUserModalProps {
-  closeModal: () => void;
-  initialValues: IUser;
-}
-
-export default function EditUserForm({
-  closeModal,
-  initialValues,
-}: EditUserModalProps) {
-  const { formik, isLoading } = useEditUser(
-    { ...initialValues, dob: new Date(initialValues.dob ?? "") },
-    closeModal
-  );
-  const roleOptions: Dropdown<string>[] = [
-    { value: "artist", label: "Artist" },
-    { value: "artist_manager", label: "Artist Manager" },
-    { value: "super_admin", label: "Super Admin" },
-  ];
+const RegisterForm = () => {
+  const { formik, isLoading } = useUserRegistration();
   const genderOptions: Dropdown<string>[] = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
     { value: "others", label: "Others" },
   ];
-
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow-lg w-96 p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Edit User</h2>
-        <form onSubmit={formik.handleSubmit}>
+    <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold text-gray-800 text-center">Login</h1>
+      <form onSubmit={formik.handleSubmit}>
+        <div>
           <div className="mb-4">
             <FormInput
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm 
-              focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
-              text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+  focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+  text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
               name="first_name"
               placeHolder="Enter your First Name"
               type="text"
@@ -55,8 +39,8 @@ export default function EditUserForm({
           <div className="mb-4">
             <FormInput
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm 
-              focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
-              text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+  focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+  text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
               name="last_name"
               placeHolder="Enter your Last Name"
               type="text"
@@ -71,11 +55,11 @@ export default function EditUserForm({
           <div className="mb-4">
             <FormInput
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm 
-              focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
-              text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+  focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+  text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
               name="email"
               placeHolder="Enter your email address"
-              type="email"
+              type="text"
               required
               label="Email"
               value={formik.values.email}
@@ -96,11 +80,11 @@ export default function EditUserForm({
           <div className="mb-4">
             <FormInput
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm 
-              focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
-              text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+  focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+  text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
               name="phone"
               placeHolder="Enter your Phone Number"
-              type="tel"
+              type="number"
               required
               label="Phone"
               value={formik.values.phone}
@@ -112,8 +96,8 @@ export default function EditUserForm({
           <div className="mb-4">
             <FormInput
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm 
-              focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
-              text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+  focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+  text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
               name="dob"
               placeHolder="Enter your Date of Birth"
               type="date"
@@ -128,8 +112,8 @@ export default function EditUserForm({
           <div className="mb-4">
             <FormInput
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm 
-              focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
-              text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
+  focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500
+  text-gray-900 placeholder:text-gray-500 placeholder:opacity-100"
               name="address"
               placeHolder="Enter your address"
               type="text"
@@ -141,18 +125,7 @@ export default function EditUserForm({
               errors={formik.errors.address}
             />
           </div>
-          <div className="mb-4">
-            <SelectField
-              label="Role"
-              value={formik.values.role}
-              placeholder="Select Role"
-              options={roleOptions}
-              disabled={false}
-              onChange={(e: string) => {
-                formik.setFieldValue("role", e);
-              }}
-            />
-          </div>
+
           <div className="mb-4">
             <SelectField
               label="Gender"
@@ -165,23 +138,26 @@ export default function EditUserForm({
               }}
             />
           </div>
-          <div className="flex justify-between">
-            <button
-              type="button"
-              onClick={closeModal}
-              className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              {isLoading ? "Updating..." : "Update"}
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className="w-full flex flex-col gap-[16px] mt-5">
+          <Button
+            color=""
+            className={`w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300`}
+            disabled={formik.isSubmitting}
+            loading={formik.isSubmitting}
+            title={formik.isSubmitting ? "Registering..." : "Register"}
+            type="submit"
+          />
+        </div>
+
+        <div className="mt-5">
+          <p className="text-sm text-gray-800">
+            Don't have an account? <Link href="/login">Login</Link>
+          </p>
+        </div>
+      </form>
     </div>
   );
-}
+};
+
+export default RegisterForm;

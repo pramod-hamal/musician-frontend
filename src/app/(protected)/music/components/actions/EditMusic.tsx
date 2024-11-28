@@ -1,10 +1,9 @@
 "use client";
-import { IUser } from "@/core/interface/login-response.interface";
+import { IMusic } from "@/core/interface/music.interface";
 import { useState } from "react";
-import EditUserForm from "../updateUser/UpdateUserForm";
+import EditUserForm from "../updateMusic/UpdateMusicForm";
 
-export default function EditUser({ user }: { user: IUser }) {
-    user.password = "";
+export default function EditMusic({ music }: { music: IMusic }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -22,7 +21,7 @@ export default function EditUser({ user }: { user: IUser }) {
       </button>
 
       {isModalOpen && (
-        <EditUserForm closeModal={closeModal} initialValues={user} />
+        <EditUserForm closeModal={closeModal} initialValues={music as any} />
       )}
     </>
   );

@@ -25,3 +25,15 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.file-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}

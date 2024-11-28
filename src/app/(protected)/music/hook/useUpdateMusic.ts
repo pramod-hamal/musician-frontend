@@ -1,52 +1,35 @@
 import { ApiConstants } from "@/app/utils/api.constants";
 import { showToast } from "@/app/utils/toast";
-import { IUser } from "@/core/interface/login-response.interface";
+import { IMusic } from "@/core/interface/music.interface";
 import { getCookie } from "cookies-next";
 import { FormikHelpers, useFormik } from "formik";
 import { useRouter } from "next-nprogress-bar";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  first_name: Yup.string().required("First Name is required"),
-  last_name: Yup.string().required("Last Name is required"),
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  phone: Yup.string().required("Phone number is required"),
-  dob: Yup.string().required("Date of Birth is required"),
-  gender: Yup.string().required("Gender is required"),
-  address: Yup.string().required("Address is required"),
-  role: Yup.string().required("Role is required"),
-  password: Yup.string()
-    .min(
-      6,
-      "Password must contain 6 or more characters with at least one of each: uppercase, lowercase, number, and special"
-    )
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/, {
-      message: "Please create a stronger password",
-    })
-    .optional(),
+  title: Yup.string().required("Title is required"),
+  album_name: Yup.string().required("Album Name is required"),
+  genre: Yup.string().required("Genre is required"),
 });
 
-export interface UseEditUser {
+
+export interface UseEditMusic {
   formik: any;
-  onEditUser: (values: IUser) => Promise<void>;
+  onEditMusic: (values: IMusic) => Promise<void>;
   isLoading: boolean;
 }
 
-export default function useEditUser(
-  initialValues: IUser,
+export default function useEditMusic(
+  initialValues: IMusic,
   closeModal: () => void
-): UseEditUser {
+): UseEditMusic {
   const route = useRouter();
   const token = getCookie("token");
 
   // Edit user function
-  const onEditUser = async (values: IUser) => {
-    if (values.password == "") {
-      delete values.password;
-    }
-    const response = await fetch(ApiConstants.users.update(values.id ?? ""), {
+  const onEditMusic = async (values: IMusic) => {
+
+    const response = await fetch(ApiConstants.musics.update(values.id ?? ""), {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -62,20 +45,20 @@ export default function useEditUser(
     }
 
     showToast({ title: "User updated successfully", type: "success" });
-    route.push("/users");
+    route.push("/music");
   };
 
-  const formik = useFormik<IUser>({
+  const formik = useFormik<IMusic>({
     initialValues,
     validationSchema,
     validateOnMount: false,
     onSubmit: async (
-      values: IUser,
-      { setSubmitting }: FormikHelpers<IUser>
+      values: IMusic,
+      { setSubmitting }: FormikHelpers<IMusic>
     ) => {
 
       console.log("updated values ",values);
-      return onEditUser(values)
+      return onEditMusic(values)
         .catch((err: any) => {
           if (err?.error) {
             showToast({
@@ -95,7 +78,7 @@ export default function useEditUser(
 
   return {
     formik,
-    onEditUser,
+    onEditMusic,
     isLoading: formik.isSubmitting,
   };
 }

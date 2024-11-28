@@ -8,7 +8,7 @@ export async function fetchData<T>(url: string): Promise<T> {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-      cache: "no-cache",
+      cache: "no-store",
     },
   });
 
@@ -38,7 +38,7 @@ export async function fetchDataWithPagination<T>(
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-      cache: "no-cache",
+      cache: "no-store",
     },
   });
   const data = await response.json();

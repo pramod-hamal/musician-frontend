@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 // import { useRouter } from "next-nprogress-bar";
 import { useState } from "react";
 
-export default function DeleteUser({ user }: { user: IUser }) {
+export default function DeleteArtist({ user }: { user: IUser }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleDelete = async (id: number | undefined) => {

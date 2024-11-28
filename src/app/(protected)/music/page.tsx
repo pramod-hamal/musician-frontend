@@ -1,21 +1,14 @@
 import { ApiConstants } from "@/app/utils/api.constants";
-import { Roles } from "@/app/utils/roles.constants";
 import { fetchDataWithPagination } from "@/app/utils/server_fetch/fetch_helper";
 import { IUser } from "@/core/interface/login-response.interface";
-import { cookies } from "next/headers";
-import UserList from "./components/UserList";
-import UserHeader from "./components/UsersHeader";
-import { redirect } from "next/navigation";
+import MusicHeader from "./components/MusicHeader";
+import MusicList from "./components/MusicList";
 
-const UsersPage = async ({
+const MusicPage = async ({
   searchParams,
 }: {
-  searchParams: { page: string };
+  searchParams: { page: string, artist_id: string };
 }) => {
-  const user = JSON.parse(cookies().get("user")?.value ?? "{}");
-  if (user.role != Roles.SUPER_ADMIN) {
-    redirect("/dashboard");
-  }
   let page = 1;
   if (
     !isNaN(parseInt(searchParams.page)) ||
@@ -25,17 +18,17 @@ const UsersPage = async ({
     page = parseInt(searchParams.page);
   }
   const data = await fetchDataWithPagination<IUser>(
-    ApiConstants.users.list(page)
+    ApiConstants.musics.list(page, 10, searchParams.artist_id)
   );
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Header Section */}
-      <UserHeader />
-      <UserList currentUsers={data.data} paginationmeta={data.meta} />
+      <MusicHeader />
+      <MusicList currentMusics={data.data} paginationmeta={data.meta} />
       {/* Users Table */}
     </div>
   );
 };
 
-export default UsersPage;
+export default MusicPage;

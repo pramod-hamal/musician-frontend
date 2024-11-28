@@ -28,16 +28,16 @@ const validationSchema = Yup.object({
     .optional(),
 });
 
-export interface UseEditUser {
+export interface UseEditArtist {
   formik: any;
   onEditUser: (values: IUser) => Promise<void>;
   isLoading: boolean;
 }
 
-export default function useEditUser(
+export default function useEditArtist(
   initialValues: IUser,
   closeModal: () => void
-): UseEditUser {
+): UseEditArtist {
   const route = useRouter();
   const token = getCookie("token");
 
@@ -61,8 +61,8 @@ export default function useEditUser(
       throw jsonData;
     }
 
-    showToast({ title: "User updated successfully", type: "success" });
-    route.push("/users");
+    showToast({ title: "Artist updated successfully", type: "success" });
+    route.push("/artists?page=1");
   };
 
   const formik = useFormik<IUser>({
