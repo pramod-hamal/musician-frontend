@@ -45,7 +45,7 @@ export default function useEditMusic(
     }
 
     showToast({ title: "User updated successfully", type: "success" });
-    route.push("/music");
+    route.refresh();
   };
 
   const formik = useFormik<IMusic>({

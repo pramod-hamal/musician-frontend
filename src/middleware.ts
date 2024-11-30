@@ -42,6 +42,13 @@ export default async function middleware(
     console.log("Redirecting to login");
     return redirect(request, "/login");
   }
+
+  if (pathname == "/") {
+    if (user && user.role == Roles.ARTIST) {
+      return redirect(request, "/music");
+    }
+    return redirect(request, "/dashboard");
+  }
   return NextResponse.next();
 }
 

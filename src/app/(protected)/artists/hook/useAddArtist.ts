@@ -3,6 +3,7 @@ import { showToast } from "@/app/utils/toast";
 import { IUser } from "@/core/interface/login-response.interface";
 import { getCookie } from "cookies-next";
 import { FormikHelpers, useFormik } from "formik";
+// import { useRouter } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
 import * as Yup from "yup";
 
@@ -64,7 +65,7 @@ export default function useAddArtist(closeModal: () => void): UseAddArtist {
     }
 
     showToast({ title: "Artist added successfully", type: "success" });
-    route.push("/artists?page=1");
+    route.refresh();
   };
 
   const formik = useFormik<IUser>({

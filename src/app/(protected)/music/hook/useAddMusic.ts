@@ -4,8 +4,8 @@ import { showToast } from "@/app/utils/toast";
 import { IMusic } from "@/core/interface/music.interface";
 import { getCookie } from "cookies-next";
 import { FormikHelpers, useFormik } from "formik";
+// import { useRouter } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
-import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import * as Yup from "yup";
 
 const initialValues: IMusic = {
@@ -46,11 +46,7 @@ export default function useAddMusic(closeModal: () => void): UseAddMusic {
     }
 
     showToast({ title: "Music added successfully", type: "success" });
-    route.replace("/music", {
-      scroll: false,
-      refetch: Date.now(),
-    } as NavigateOptions
-    );
+    route.refresh();
   };
 
   const formik = useFormik<IMusic>({

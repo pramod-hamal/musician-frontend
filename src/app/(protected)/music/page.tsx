@@ -7,7 +7,7 @@ import MusicList from "./components/MusicList";
 const MusicPage = async ({
   searchParams,
 }: {
-  searchParams: { page: string, artist_id: string };
+  searchParams: { page: string; artist_id: string };
 }) => {
   let page = 1;
   if (
@@ -25,7 +25,11 @@ const MusicPage = async ({
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Header Section */}
       <MusicHeader />
-      <MusicList currentMusics={data.data} paginationmeta={data.meta} />
+      <MusicList
+        currentPage={page.toString()}
+        currentMusics={data.data}
+        paginationmeta={data.meta}
+      />
       {/* Users Table */}
     </div>
   );

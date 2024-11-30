@@ -66,7 +66,7 @@ export default function useAddUser(closeModal: () => void): UseAddUser {
     }
 
     showToast({ title: "User added successfully", type: "success" });
-    route.push("/users?page=1");
+    route.refresh();
   };
 
   const formik = useFormik<IUser>({

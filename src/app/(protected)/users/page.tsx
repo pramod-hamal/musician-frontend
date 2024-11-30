@@ -32,7 +32,11 @@ const UsersPage = async ({
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Header Section */}
       <UserHeader />
-      <UserList currentUsers={data.data} paginationmeta={data.meta} />
+      <UserList
+        currentPage={page.toString()}
+        currentUsers={data.data}
+        paginationmeta={data.meta}
+      />
       {/* Users Table */}
     </div>
   );

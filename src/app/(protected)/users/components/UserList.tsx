@@ -3,17 +3,22 @@ import { IPaginationMeta } from "@/app/utils/server_fetch/fetch_helper";
 import { IUser } from "@/core/interface/login-response.interface";
 import DeleteUser from "./actions/DeleteUser";
 import EditUser from "./actions/EditUser";
+import { paginationSn } from "@/core/lib/utils";
 
 export default function UserList({
+  currentPage,
   currentUsers,
   paginationmeta,
 }: {
+  currentPage: string;
   currentUsers: IUser[];
   paginationmeta: IPaginationMeta;
 }) {
+  if (isNaN(parseInt(currentPage))) {
+    currentPage = "1";
+  }
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">User List</h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border">
@@ -34,7 +39,9 @@ export default function UserList({
                 key={user.id}
                 className="text-gray-700 hover:bg-gray-100 transition"
               >
-                <td className="px-4 py-2 border text-center">{index + 1}</td>
+                <td className="px-4 py-2 border text-center">
+                  {paginationSn(index + 1, parseInt(currentPage))}
+                </td>
                 <td className="px-4 py-2 border">{user.first_name}</td>
                 <td className="px-4 py-2 border">{user.last_name}</td>
                 <td className="px-4 py-2 border">{user.email}</td>

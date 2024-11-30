@@ -1,10 +1,9 @@
 "use client";
 import FormInput from "@/app/components/form/input";
-import PasswordInput from "@/app/components/form/input/password.input";
 import SelectField from "@/app/components/form/select";
+import { MusicGenreEnum } from "@/app/utils/roles.constants";
 import { Dropdown } from "@/core/interface/dropdown.base";
 import useAddMusic from "../../hook/useAddMusic";
-import { MusicGenreEnum } from "@/app/utils/roles.constants";
 
 interface AddUserModalProps {
   closeModal: () => void;

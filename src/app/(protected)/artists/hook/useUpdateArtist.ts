@@ -62,7 +62,7 @@ export default function useEditArtist(
     }
 
     showToast({ title: "Artist updated successfully", type: "success" });
-    route.push("/artists?page=1");
+    route.refresh();
   };
 
   const formik = useFormik<IUser>({

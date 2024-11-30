@@ -33,7 +33,7 @@ const ArtistPage = async ({
     <div className="min-h-screen bg-gray-100 p-8">
       {/* Header Section */}
       <ArtistHeader />
-      <ArtistList currentUsers={data.data} paginationmeta={data.meta} />
+      <ArtistList currentPage={searchParams.page ?? 1} currentUsers={data.data} paginationmeta={data.meta} />
       {/* Users Table */}
     </div>
   );

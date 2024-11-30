@@ -62,7 +62,7 @@ export default function useEditUser(
     }
 
     showToast({ title: "User updated successfully", type: "success" });
-    route.push("/users");
+    route.refresh();
   };
 
   const formik = useFormik<IUser>({

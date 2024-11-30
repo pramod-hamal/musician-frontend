@@ -15,9 +15,7 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
+  password: Yup.string().required("Password is required"),
 });
 
 interface UseUserLogin {
@@ -39,7 +37,7 @@ export default function useUserLogin(): UseUserLogin {
 
     const jsonData = await response.json();
     if (jsonData.statusCode >= 400) {
-     throw jsonData;
+      throw jsonData;
     }
 
     showToast({ title: "Login successful", type: "success" });

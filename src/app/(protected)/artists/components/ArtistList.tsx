@@ -6,18 +6,23 @@ import DeleteArtist from "./actions/DeleteArtist";
 import EditArtist from "./actions/EditArtist";
 import { cookies } from "next/headers";
 import { Roles } from "@/app/utils/roles.constants";
+import { paginationSn } from "@/core/lib/utils";
 
 export default function ArtistList({
+  currentPage,
   currentUsers,
   paginationmeta,
 }: {
+  currentPage: string;
   currentUsers: IUser[];
   paginationmeta: IPaginationMeta;
 }) {
+  if (isNaN(parseInt(currentPage))) {
+    currentPage = "1";
+  }
   const user = JSON.parse(cookies().get("user")?.value ?? "{}");
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">User List</h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border">
@@ -38,7 +43,9 @@ export default function ArtistList({
                 key={user.id}
                 className="text-gray-700 hover:bg-gray-100 transition"
               >
-                <td className="px-4 py-2 border text-center">{index + 1}</td>
+                <td className="px-4 py-2 border text-center">
+                  {paginationSn(index + 1, parseInt(currentPage))}
+                </td>
                 <td className="px-4 py-2 border">{user.first_name}</td>
                 <td className="px-4 py-2 border">{user.last_name}</td>
                 <td className="px-4 py-2 border">{user.email}</td>
@@ -51,8 +58,12 @@ export default function ArtistList({
                   >
                     View
                   </Link>
-                  {user.role != Roles.ARTIST_MANAGER && <EditArtist user={user} />}
-                  {user.role != Roles.ARTIST_MANAGER && <DeleteArtist user={user} />}
+                  {user.role != Roles.ARTIST_MANAGER && (
+                    <EditArtist user={user} />
+                  )}
+                  {user.role != Roles.ARTIST_MANAGER && (
+                    <DeleteArtist user={user} />
+                  )}
                 </td>
               </tr>
             ))}
